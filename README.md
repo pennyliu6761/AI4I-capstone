@@ -385,3 +385,7 @@ AI4I 2020 Predictive Maintenance Dataset 由 Stephan Matzka 發布，收錄於 U
 | XGBoost 特徵名含括號 | `[` `]` 造成錯誤 | 訓練前轉 numpy array 或重新命名特徵 |
 | TabNet 記憶體爆炸 | 與大型模型同時在記憶體中 | 訓練完後立即儲存指標，釋放模型物件 |
 | OSF 規則公式錯誤 | 誤用 Power×Wear 而非 Torque×Wear | OSF 觸發條件是 `Torque × Wear > threshold`（Nm·min） |
+
+
+## Streamlit UI 實作範例程式
+[AI4I_Streamlit_v4](./ai4i_streamlit_v4_final.zip)
