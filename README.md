@@ -388,4 +388,4 @@ AI4I 2020 Predictive Maintenance Dataset 由 Stephan Matzka 發布，收錄於 U
 
 ---
 
-## [AI4I Streamlit UI 實作範例](https://ai4i-capstone-5kqvmrpxcozvcmccvvb4ut.streamlit.app)
+## [AI4I Streamlit UI 實作範例](https://ai4i-capstone-5kqvmrpxcozvcmccvvb4ut.streamlit.app/)
