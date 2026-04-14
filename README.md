@@ -52,7 +52,7 @@
 
 ## 二、整體研究架構
 
-![兩階段架構圖](/assets/fig_two_stage.png)
+![兩階段架構圖](/assets/fig01_two_stage.png)
 *圖 2-1　兩階段預測性維護決策支援系統架構圖*
 
 本研究採用兩階段決策框架。第一階段透過 EDA 確立各故障的物理本質，直接以規則型決策處理不可預測故障；第二階段僅針對可診斷的規則型故障建立 ML/DL 模型。
@@ -140,7 +140,7 @@ AI4I 2020 Predictive Maintenance Dataset 由 Stephan Matzka 發布，收錄於 U
 
 ### 4.2 各故障特徵分布視覺化
 
-![EDA 第一階段](/assets/fig_eda_stage1.png)
+![EDA 第一階段](/assets/fig02_eda_stage1.png)
 *圖 4-1　各故障特徵分布（類別數量、TWF 磨耗重疊、HDF 溫差分離、PWF 功率、OSF 扭矩×磨耗）*
 
 ### 4.3 可診斷性量化實驗（1-vs-Rest）
@@ -155,7 +155,7 @@ AI4I 2020 Predictive Maintenance Dataset 由 Stephan Matzka 發布，收錄於 U
 | TWF | 半隨機型 | 770 | 0.9348 | 0.398 | 95% | Stage 1 規則警示 |
 | RNF | 純隨機型 | 9 | **0.5032** | 0.003 | 0% | **排除，不建模** |
 
-![三項深度實驗](experiments_ABC_report.png)
+![三項深度實驗](/assets/fig03_experiments_ABC_report.png)
 *圖 4-2　實驗A（可診斷性）· 實驗B（消融實驗）· 實驗C（SHAP 可解釋性）*
 
 ### 4.4 TWF 的貝葉斯誤差分析
@@ -183,7 +183,7 @@ AI4I 2020 Predictive Maintenance Dataset 由 Stephan Matzka 發布，收錄於 U
 
 規則法召回率雖達 100%，但每 5 個警報有 4 個是假的，會造成「警示疲勞（Alert Fatigue）」。機器學習在僅損失 3% 召回率的情況下，將誤報降低 97.6%，這是 ML 的核心實務貢獻。
 
-![深度分析](/assets/fig_deep_analysis.png)
+![深度分析](/assets/fig04_deep_analysis.png)
 *圖 4-3　TWF 誤判根本原因 · 排除 RNF 前後差異 · DL vs ML 差距成因*
 
 ---
@@ -216,10 +216,10 @@ AI4I 2020 Predictive Maintenance Dataset 由 Stephan Matzka 發布，收錄於 U
 
 ### 5.4 實驗結果
 
-![模型比較](/assets/fig1_model_comparison.png)
+![模型比較](/assets/fig05_model_comparison.png)
 *圖 5-1　第二階段各模型三項指標比較（MCC / ROC-AUC / F1 加權）*
 
-![效率效能](/assets/fig2_efficiency.png)
+![效率效能](/assets/fig06_efficiency.png)
 *圖 5-2　訓練效率 vs 預測效能氣泡圖與 Recall(macro) 比較*
 
 | 排名 | 模型 | 類別 | MCC | ROC-AUC | F1(加權) | Recall(macro) | 訓練時間(s) |
@@ -245,12 +245,12 @@ AI4I 2020 Predictive Maintenance Dataset 由 Stephan Matzka 發布，收錄於 U
 | Stacking(XGB+LGBM) | 0.7732 | — | **0.9680** | +0.195 |
 | **平均** | **0.695** | **0.749** | **0.963** | **+0.268** |
 
-![三階段比較](/assets/fig_two_stage.png)
+![三階段比較](/assets/fig07_mcc_comparison.png)
 *圖 5-3　三種資料設定下的 MCC 比較*
 
 ### 5.6 混淆矩陣分析
 
-![混淆矩陣](/assets/fig3_confusion.png)
+![混淆矩陣](/assets/fig08_confusion.png)
 *圖 5-4　XGBoost（左）與 MLP 升級版（右）混淆矩陣*
 
 排除 TWF 和 RNF 後，混淆矩陣整體非常乾淨。主要的殘餘誤判集中在 HDF 類別（訓練樣本僅約 60 筆），原因是該類別資訊最少。PWF 和 OSF 的分類幾乎完美，反映其明確的物理邊界。
@@ -280,7 +280,7 @@ AI4I 2020 Predictive Maintenance Dataset 由 Stephan Matzka 發布，收錄於 U
 
 ### 7.2 SHAP 分析結果
 
-![SHAP vs TabNet](/assets/fig4_shap_tabnet.png)
+![SHAP vs TabNet](/assets/fig09_shap_tabnet.png)
 *圖 7-1　XGBoost SHAP 各故障類別（左）與 XGBoost vs TabNet 全局特徵重要性對比（右）*
 
 | 故障類別 | 物理觸發條件 | SHAP Top-1 特徵 | 物理一致性 |
@@ -304,7 +304,7 @@ AI4I 2020 Predictive Maintenance Dataset 由 Stephan Matzka 發布，收錄於 U
 
 ## 八、研究結論與貢獻
 
-![研究結論摘要](/assets/fig5_summary.png)
+![研究結論摘要](/assets/fig10_summary.png)
 *圖 8-1　研究架構、模型排名與四項核心結論摘要*
 
 ### 8.1 四項核心研究結論
