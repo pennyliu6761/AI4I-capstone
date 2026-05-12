@@ -17,16 +17,17 @@ PRESETS = {
     '🔧 刀具磨耗警示':   (300.0, 310.0, 1450, 42.0, 215, 'L'),
 }
 
-def preprocess(air_t, proc_t, rpm, torque, wear, m_type, feat_cols):
+def preprocess(air_t, proc_t, rpm, torque, wear, m_type):
+    """回傳 numpy array，避免 scaler 比對欄位名稱"""
     power      = rpm * torque
     power_wear = power * wear
     temp_diff  = proc_t - air_t
     temp_power = temp_diff / power if power != 0 else 0.0
     type_l = 1 if m_type == 'L' else 0
     type_m = 1 if m_type == 'M' else 0
-    row = [air_t, proc_t, rpm, torque, wear,
-           power, power_wear, temp_diff, temp_power, type_l, type_m]
-    return pd.DataFrame([row], columns=feat_cols)
+    return np.array([[air_t, proc_t, rpm, torque, wear,
+                      power, power_wear, temp_diff, temp_power,
+                      type_l, type_m]], dtype=float)
 
 def stage1_check(wear, air_t, proc_t, rpm, torque, m_type):
     """第一階段規則決策"""
@@ -132,8 +133,8 @@ def show():
     # ── 第二階段：ML/DL 預測 ─────────────────────────────────────────
     sec("🤖 第二階段：ML/DL 模型預測（HDF / PWF / OSF / 正常）")
 
-    X_df     = preprocess(air_t, proc_t, rpm, torque, wear, m_type, FEAT_COLS)
-    X_sc_arr = scaler.transform(X_df)
+    X_arr    = preprocess(air_t, proc_t, rpm, torque, wear, m_type)
+    X_sc_arr = scaler.transform(X_arr)   # numpy array，不比對欄位名
     X_sc     = pd.DataFrame(X_sc_arr, columns=FEAT_COLS)
 
     preds_all = {}

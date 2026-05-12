@@ -233,7 +233,7 @@ def show():
             for idx in range(step, len(sim_df)):
                 row  = sim_df.iloc[idx]
                 X_r  = pd.DataFrame([row[FEAT_COLS].values], columns=FEAT_COLS)
-                X_sc = pd.DataFrame(scaler.transform(X_r), columns=FEAT_COLS)
+                X_sc = pd.DataFrame(scaler.transform(X_r.values), columns=FEAT_COLS)  # .values 避免欄位名比對
                 prob = pred_mdl.predict_proba(X_sc)[0]
                 if len(prob) < 4:
                     p4 = np.zeros(4)

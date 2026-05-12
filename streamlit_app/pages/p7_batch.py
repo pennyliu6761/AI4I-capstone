@@ -107,7 +107,7 @@ def show():
 
     # ── 前處理 & 預測 ────────────────────────────────────────────────
     df_feat = preprocess(df_raw)
-    X_df    = pd.DataFrame(scaler.transform(df_feat[FEAT_COLS]), columns=FEAT_COLS)
+    X_df    = pd.DataFrame(scaler.transform(df_feat[FEAT_COLS].values), columns=FEAT_COLS)  # .values 避免欄位名比對
 
     if not sel_models:
         st.warning("請至少選擇一個模型。"); return
