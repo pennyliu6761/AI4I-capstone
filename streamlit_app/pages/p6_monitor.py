@@ -147,10 +147,10 @@ def show():
                 f"{v}<span style='font-size:.65rem;color:#8888aa;margin-left:.1rem'>{u}</span></div>"
                 f"<div style='font-size:.65rem;color:#8888aa'>{lb}</div></div>",
                 unsafe_allow_html=True)
-        kc(k1, f"{cur.get('Air temperature K',0):.1f}", 'K',   '空氣溫度', '#7bb4f7')
-        kc(k2, f"{cur.get('Rotational speed rpm',0):.0f}",'rpm','轉速',    '#7bf7c8')
-        kc(k3, f"{cur.get('Torque Nm',0):.1f}",          'Nm',  '扭矩',    '#f7c47b')
-        kc(k4, f"{cur.get('Tool wear min',0):.0f}",       'min', '磨耗',   '#f77b7b')
+        kc(k1, f"{cur.get('air_temp',0):.1f}", 'K',   '空氣溫度', '#7bb4f7')
+        kc(k2, f"{cur.get('rpm',0):.0f}",'rpm','轉速',    '#7bf7c8')
+        kc(k3, f"{cur.get('torque',0):.1f}",          'Nm',  '扭矩',    '#f7c47b')
+        kc(k4, f"{cur.get('wear',0):.0f}",       'min', '磨耗',   '#f77b7b')
         kc(k5, f"{cur.get('Power',0)/1000:.1f}",            'kW',  '功率',   '#c47bf7')
 
         # 窗口資料（只取最近 window 筆，不掃描全部 hist）
@@ -175,20 +175,20 @@ def show():
 
         # 溫度圖
         ch_temp.plotly_chart(line_fig('空氣 / 製程溫度 [K]', [
-            (wdf['Air temperature K'],    '空氣', '#7bb4f7', False),
-            (wdf['Process temperature K'],'製程', '#f7c47b', False),
+            (wdf['air_temp'],    '空氣', '#7bb4f7', False),
+            (wdf['proc_temp'],'製程', '#f7c47b', False),
         ], shapes), use_container_width=True, key=f'ch_temp_{_rk}')
 
         # 轉速 + 扭矩圖（合一）
         ch_rpm.plotly_chart(line_fig('轉速 [rpm] / 扭矩 [Nm]', [
-            (wdf['Rotational speed rpm'], '轉速', '#7bf7c8', False),
-            (wdf['Torque Nm'],            '扭矩', '#c47bf7', False),
+            (wdf['rpm'], '轉速', '#7bf7c8', False),
+            (wdf['torque'],            '扭矩', '#c47bf7', False),
         ], shapes), use_container_width=True, key=f'ch_rpm_{_rk}')
 
         # 磨耗 + 功率圖（合一）
         pw_kw = wdf.get('Power', pd.Series([0]*len(wdf))) / 1000
         ch_wear.plotly_chart(line_fig('磨耗 [min] / 功率 [kW]', [
-            (wdf['Tool wear min'], '磨耗', '#f77b7b', True),
+            (wdf['wear'], '磨耗', '#f77b7b', True),
             (pw_kw,                  '功率', '#f7a07b', False),
         ], shapes), use_container_width=True, key=f'ch_wear_{_rk}')
 
