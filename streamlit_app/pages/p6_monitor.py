@@ -56,7 +56,14 @@ def show():
     scaler    = b['scaler']
     models    = b['models']
     sim_df    = load_sim()
-    FEAT_COLS = b['feat_cols']   # 與 scaler 一致
+    FEAT_COLS = b['feat_cols']   # 與 scaler 一致（SAFE 格式）
+
+    # simulation_data.csv 欄位名是原始格式（含括號）
+    # 建立對應關係：原始名 → SAFE 名
+    SIM_COLS = ['Air temperature [K]', 'Process temperature [K]',
+                'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]',
+                'Power', 'Power wear', 'Temperature difference',
+                'Temperature power', 'Type_L', 'Type_M']
 
     st.markdown("# 📡 即時監控看板")
     st.markdown("<p style='color:#8888aa;margin-top:-.4rem'>"
@@ -232,8 +239,10 @@ def show():
             bar = st.progress(0, text="播放中…")
             for idx in range(step, len(sim_df)):
                 row  = sim_df.iloc[idx]
-                X_r  = pd.DataFrame([row[FEAT_COLS].values], columns=FEAT_COLS)
-                X_sc = pd.DataFrame(scaler.transform(X_r.values), columns=FEAT_COLS)  # .values 避免欄位名比對
+                # 從 sim_df（原始欄位名）取值，轉成 numpy array 給 scaler
+                raw_vals = [row[c] for c in SIM_COLS]
+                X_r  = np.array([raw_vals], dtype=float)
+                X_sc = pd.DataFrame(scaler.transform(X_r), columns=FEAT_COLS)
                 prob = pred_mdl.predict_proba(X_sc)[0]
                 if len(prob) < 4:
                     p4 = np.zeros(4)
